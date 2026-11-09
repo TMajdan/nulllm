@@ -1,0 +1,181 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(0.982 0.002 250);
+  --foreground: oklch(0.245 0.006 285);
+
+  --card: oklch(1 0 0);
+  --card-foreground: var(--foreground);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--foreground);
+
+  --primary: oklch(0.58 0.19 254);
+  --primary-foreground: oklch(0.995 0 0);
+
+  --secondary: oklch(0.965 0.002 260);
+  --secondary-foreground: oklch(0.3 0.006 285);
+
+  --muted: oklch(0.963 0.002 260);
+  --muted-foreground: oklch(0.555 0.008 285);
+
+  --accent: oklch(0.958 0.003 260);
+  --accent-foreground: oklch(0.28 0.006 285);
+
+  --destructive: oklch(0.58 0.21 25);
+  --success: oklch(0.62 0.15 155);
+  --warning: oklch(0.7 0.15 75);
+
+  --border: oklch(0.918 0.003 260);
+  --input: oklch(0.93 0.003 260);
+  --ring: oklch(0.58 0.19 254 / 30%);
+}
+
+.dark {
+  --background: oklch(0.163 0.002 270);
+  --foreground: oklch(0.962 0.0015 260);
+
+  --card: oklch(0.207 0.0025 270);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.222 0.003 270);
+  --popover-foreground: var(--foreground);
+
+  --primary: oklch(0.69 0.16 250);
+  --primary-foreground: oklch(0.16 0.01 260);
+
+  --secondary: oklch(0.245 0.003 270);
+  --secondary-foreground: oklch(0.93 0.002 260);
+
+  --muted: oklch(0.237 0.003 270);
+  --muted-foreground: oklch(0.685 0.006 270);
+
+  --accent: oklch(0.262 0.004 270);
+  --accent-foreground: oklch(0.95 0.002 260);
+
+  --destructive: oklch(0.66 0.19 25);
+  --success: oklch(0.72 0.15 158);
+  --warning: oklch(0.78 0.14 78);
+
+  --border: oklch(0.283 0.004 270);
+  --input: oklch(0.305 0.004 270);
+  --ring: oklch(0.69 0.16 250 / 40%);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text",
+    "Segoe UI", system-ui, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", "Segoe UI Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.021em;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-primary) 18%, transparent);
+  }
+}
+
+@layer components {
+  .canvas-glow {
+    background-image: radial-gradient(
+      70rem 32rem at 50% -12%,
+      color-mix(in oklab, var(--color-primary) 7%, transparent),
+      transparent 72%
+    );
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--color-muted-foreground) 35%, transparent) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: color-mix(in oklab, var(--color-muted-foreground) 26%, transparent);
+    border-radius: 9999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(in oklab, var(--color-muted-foreground) 45%, transparent);
+    background-clip: content-box;
+  }
+}
+
+@keyframes nllm-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes nllm-dialog-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -49%) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.animate-nllm-overlay {
+  animation: nllm-overlay-in 160ms ease-out;
+}
+
+.animate-nllm-dialog {
+  animation: nllm-dialog-in 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
